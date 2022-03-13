@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:public_key_pinning/evaluation.dart';
 import 'package:public_key_pinning_platform_interface/public_key_pinning_platform_interface.dart';
 
 const MethodChannel methodChannel = MethodChannel('plugins/public_key_pinning_ios');
