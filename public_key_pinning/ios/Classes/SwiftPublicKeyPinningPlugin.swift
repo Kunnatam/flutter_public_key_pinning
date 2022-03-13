@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 
 public class SwiftPublicKeyPinningPlugin: NSObject, FlutterPlugin {
-  static let base = "com.klaa.plugins/public_key_pinning"
+  static let base = "plugins/public_key_pinning_ios"
   
   internal static var methodHandler = MethodHandler()
   

@@ -88,6 +88,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -102,12 +109,28 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.2"
   public_key_pinning:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
+    version: "0.0.1"
+  public_key_pinning_platform_interface:
+    dependency: transitive
+    description:
+      path: public_key_pinning_platform_interface
+      ref: HEAD
+      resolved-ref: "9e5bbb8f1a25e738a2cc26de309089eb266b5941"
+      url: "git://github.com/Kunnatam/flutter_public_key_pinning.git"
+    source: git
     version: "0.0.1"
   sky_engine:
     dependency: transitive
@@ -155,7 +178,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.8"
   typed_data:
     dependency: transitive
     description:

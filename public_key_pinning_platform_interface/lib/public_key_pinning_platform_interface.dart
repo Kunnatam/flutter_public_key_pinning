@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
+import 'package:public_key_pinning_platform_interface/evaluation.dart';
 import 'method_channel_public_key_pinning.dart';
 
 /// The interface that implementations of public_key_pinning must implement.
@@ -43,26 +42,4 @@ abstract class PublicKeyPinningPlatform extends PlatformInterface {
   }) {
     throw UnimplementedError('request() has not been implemented.');
   }
-}
-
-/// An evaluation pairing [fileName].der to the evaluating host server with the given [hostName].
-class Evaluation {
-  final String hostName;
-
-  final String fileName;
-
-  const Evaluation({
-    required this.hostName,
-    required this.fileName,
-  });
-
-  factory Evaluation.fromJson(Map<String, dynamic> json) => Evaluation(
-        hostName: json["hostName"],
-        fileName: json["fileName"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "hostName": hostName,
-        "fileName": fileName,
-      };
 }

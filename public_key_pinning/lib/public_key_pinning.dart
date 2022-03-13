@@ -1,13 +1,34 @@
-
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:public_key_pinning_platform_interface/public_key_pinning_platform_interface.dart';
 
-class PublicKeyPinning {
-  static const MethodChannel _channel = MethodChannel('public_key_pinning');
+const MethodChannel methodChannel = MethodChannel('plugins/public_key_pinning_ios');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+/// An implementation of [PublicKeyPinningPlatform] for iOS.
+class PublicKeyPinningIOS extends PublicKeyPinningPlatform {
+  /// Registers this class as the default instance of [PublicKeyPinningPlatform].
+  static void registerWith() {
+    PublicKeyPinningPlatform.instance = PublicKeyPinningIOS();
+  }
+
+  @override
+  Future<void> init(List<Evaluation> evaluations) {
+    final evs = {
+      "evaluations": evaluations,
+    };
+    return methodChannel.invokeMethod('init', evs);
+  }
+
+  @override
+  Future<bool> request({
+    required String url,
+    Map<String, dynamic>? headers,
+  }) {
+    final arguments = {
+      'url': url,
+      'headers': headers,
+    };
+    return methodChannel.invokeMethod<bool>('request', arguments).then<bool>((bool? value) => value ?? false);
   }
 }
