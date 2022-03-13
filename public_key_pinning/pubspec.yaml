@@ -24,8 +24,11 @@ dev_dependencies:
 flutter:
   plugin:
     platforms:
-      android:
-        package: com.klaa.public_key_pinning.public_key_pinning
-        pluginClass: PublicKeyPinningPlugin
+    #TODO promote this to shared plugins and make dedicated plugins for eash iOS and Android
+      # android:
+      #   package: com.klaa.public_key_pinning.public_key_pinning
+      #   pluginClass: PublicKeyPinningPlugin
       ios:
-        pluginClass: PublicKeyPinningPlugin
+      # TODO use this line after iOS got its dedicate package
+        # default_package: public_key_pinning_ios
+        pluginClass: PublicKeyPinningIOS
