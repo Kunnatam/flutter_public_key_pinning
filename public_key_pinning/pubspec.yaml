@@ -1,7 +1,8 @@
 name: public_key_pinning
-description: A new flutter plugin project.
+description: Flutter plugin for SSL pinning using public key.
 version: 0.0.1
-homepage:
+repository: https://github.com/Kunnatam/flutter_public_key_pinning/tree/master/public_key_pinning
+issue_tracker: https://github.com/Kunnatam/flutter_public_key_pinning/issues
 publish_to: none
 
 environment:
@@ -15,6 +16,14 @@ dependencies:
     git:
       url: git://github.com/Kunnatam/flutter_public_key_pinning.git
       path: public_key_pinning_platform_interface
+  public_key_pinning_ios:
+    git:
+      url: git://github.com/Kunnatam/flutter_public_key_pinning.git
+      path: public_key_pinning_ios
+  public_key_pinning_android:
+    git:
+      url: git://github.com/Kunnatam/flutter_public_key_pinning.git
+      path: public_key_pinning_android
 
 dev_dependencies:
   flutter_test:
@@ -24,11 +33,7 @@ dev_dependencies:
 flutter:
   plugin:
     platforms:
-    #TODO promote this to shared plugins and make dedicated plugins for eash iOS and Android
-      # android:
-      #   package: com.klaa.public_key_pinning.public_key_pinning
-      #   pluginClass: PublicKeyPinningPlugin
+      android:
+        default_package: public_key_pinning_android
       ios:
-      # TODO use this line after iOS got its dedicate package
-        # default_package: public_key_pinning_ios
-        pluginClass: PublicKeyPinningIOS
+        default_package: public_key_pinning_ios
