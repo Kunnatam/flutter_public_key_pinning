@@ -14,15 +14,15 @@ dependencies:
     sdk: flutter
   public_key_pinning_platform_interface:
     git:
-      url: git://github.com/Kunnatam/flutter_public_key_pinning.git
+      url: https://github.com/Kunnatam/flutter_public_key_pinning.git
       path: public_key_pinning_platform_interface
   public_key_pinning_ios:
     git:
-      url: git://github.com/Kunnatam/flutter_public_key_pinning.git
+      url: https://github.com/Kunnatam/flutter_public_key_pinning.git
       path: public_key_pinning_ios
   public_key_pinning_android:
     git:
-      url: git://github.com/Kunnatam/flutter_public_key_pinning.git
+      url: https://github.com/Kunnatam/flutter_public_key_pinning.git
       path: public_key_pinning_android
 
 dev_dependencies:

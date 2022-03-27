@@ -129,7 +129,7 @@ packages:
       path: public_key_pinning_platform_interface
       ref: HEAD
       resolved-ref: bfbd2338cbdd9ef79b23db361ae6fba89659b36c
-      url: "git://github.com/Kunnatam/flutter_public_key_pinning.git"
+      url: "https://github.com/Kunnatam/flutter_public_key_pinning.git"
     source: git
     version: "0.0.1"
   sky_engine:
