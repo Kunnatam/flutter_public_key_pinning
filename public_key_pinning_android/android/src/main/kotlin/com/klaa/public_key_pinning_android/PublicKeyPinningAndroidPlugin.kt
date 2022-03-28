@@ -1,5 +1,6 @@
 package com.klaa.public_key_pinning_android
 
+import android.util.Log
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -8,25 +9,27 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-/** PublicKeyPinningAndroidPlugin */
 class PublicKeyPinningAndroidPlugin: FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
+
+  private var base: String = "plugins/public_key_pinning_android"
+
+  companion object {
+    private const val tag: String = "#PbKeyPinning"
+
+    internal var methodHandler = MethodHandler()
+  }
+
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "public_key_pinning_android")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, base)
     channel.setMethodCallHandler(this)
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
-    }
+    Log.d(tag, "onMethodCall : ${call.method}")
+
+    methodHandler.handle(call, result)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
