@@ -48,9 +48,11 @@ class MethodHandler {
       return result(FlutterError(code: "MISSING_ARGUMENT", message: "Unable to obtain method's arguments.", details: nil))
     }
     
-    guard let url = args["url"] as? String, let headers = args["headers"] as? [String:String]? else {
-      return result(FlutterError(code: "INVALID_PARAMETER", message: "Unable to obtain method's parameter(s) of key 'url' and/or 'headers'.", details: nil))
+    guard let url = args["url"] as? String else {
+      return result(FlutterError(code: "INVALID_PARAMETER", message: "Unable to obtain method's parameter(s) of key 'url'.", details: nil))
     }
+    
+    let headers = args["headers"] as? [String:String]
     
     if let p = pinner {
       p.request(url: url, headers: headers) {
