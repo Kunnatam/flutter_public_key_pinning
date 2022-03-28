@@ -30,11 +30,17 @@ class MethodHandler {
       return result(FlutterError(code: "INVALID_PARAMETER", message: "Unable to obtain method's parameter of key 'evaluations'.", details: nil))
     }
     
-//    guard let evs = toEvaluationList(evaluations) else {
-//
-//    }
-//
-//    return result(pinner = SSLPinner.init(evs))
+    do {
+        let json = try JSONSerialization.data(withJSONObject: evaluations)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let decodedEvaluations = try decoder.decode([Evaluation].self, from: json)
+        decodedEvaluations.forEach{print($0)}
+        pinner = try SSLPinner.init(decodedEvaluations)
+        result(nil)
+    } catch {
+      return result(FlutterError(code: "LIBRARY_ERROR", message: "Decode Evaluations list failed", details: nil))
+    }
   }
   
   private func requestTrust(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -46,9 +52,13 @@ class MethodHandler {
       return result(FlutterError(code: "INVALID_PARAMETER", message: "Unable to obtain method's parameter(s) of key 'url' and/or 'headers'.", details: nil))
     }
     
-    pinner?.request(url: url, headers: headers) {
-      (success) in
-      result(success)
+    if let p = pinner {
+      p.request(url: url, headers: headers) {
+        (success) in
+        result(success)
+      }
+    } else {
+      return result(FlutterError(code: "LIBRARY_ERROR", message: "Pinner is not being initialized.", details: nil))
     }
   }
 }

@@ -8,6 +8,12 @@
 import Foundation
 import Alamofire
 
+enum SSLPinnerError: Error {
+  case fileNotFound
+  case secKeyConvertFail
+  case certificateFileNotFound
+}
+
 struct Evaluation: Codable {
     let hostName, fileName: String
 }
@@ -15,18 +21,14 @@ struct Evaluation: Codable {
 class SSLPinner {
   let session: Session
   
-  public init(_ evaluations:[Evaluation]) {
+  public init(_ evaluations:[Evaluation]) throws {
     var evaluators = [String:PublicKeysTrustEvaluator]()
-//    let evaluators = [
-//      "dev.clicknic.co": PublicKeysTrustEvaluator(keys: [Certificates.devKey]),
-//      "uat.clicknic.co": PublicKeysTrustEvaluator(keys: [Certificates.uatKey]),
-//      "app.clicknic.co": PublicKeysTrustEvaluator(keys: [Certificates.prodKey]),
-//    ]
-//    for element in evaluations {
-//      if let ev = Evaluation(from: element) {
-//
-//      }
-//    }
+    for evaluation in evaluations {
+      guard let secKey:SecKey = try SSLPinner.key(filename: evaluation.fileName) else {
+        throw SSLPinnerError.secKeyConvertFail
+      }
+      evaluators[evaluation.hostName] = PublicKeysTrustEvaluator(keys: [secKey])
+    }
     session = Session(serverTrustManager: ServerTrustManager(evaluators: evaluators))
   }
   
@@ -43,5 +45,22 @@ class SSLPinner {
         break
       }
     }
+  }
+  
+  private static func certificate(filename: String) throws -> SecCertificate? {
+    guard let filePath = Bundle.main.path(forResource: filename, ofType: "der") else {
+      throw SSLPinnerError.certificateFileNotFound
+    }
+    let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+    let certificate = SecCertificateCreateWithData(nil, data as CFData)!
+    return certificate
+  }
+  
+  private static func key(filename: String) throws -> SecKey? {
+    guard let certificate = try certificate(filename: filename) else {
+      throw SSLPinnerError.certificateFileNotFound
+    }
+    let publicKey = SecCertificateCopyKey(certificate)
+    return publicKey!
   }
 }

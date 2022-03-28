@@ -15,9 +15,9 @@ class PublicKeyPinningIOS extends PublicKeyPinningPlatform {
 
   @override
   Future<void> init(List<Evaluation> evaluations) {
-    final evsMap = evaluations.map((e) => e.toJson());
+    final evsList = evaluations.map((e) => e.toJson()).toList();
     final evs = {
-      "evaluations": evsMap,
+      "evaluations": evsList,
     };
     return methodChannel.invokeMethod('init', evs);
   }
