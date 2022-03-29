@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:public_key_pinning_platform_interface/evaluation.dart';
 import 'package:public_key_pinning_platform_interface/public_key_pinning_platform_interface.dart';
 
-class PublicKeyPinningAndroid extends PublicKeyPinningPlatform {
-  static const MethodChannel _channel = MethodChannel('plugins/public_key_pinning_android');
+const MethodChannel methodChannel = MethodChannel('plugins/public_key_pinning_android');
 
+/// An implementation of [PublicKeyPinningPlatform] for Android.
+class PublicKeyPinningAndroid extends PublicKeyPinningPlatform {
+  /// Registers this class as the default instance of [PublicKeyPinningPlatform].
   static void registerWith() {
     PublicKeyPinningPlatform.instance = PublicKeyPinningAndroid();
   }
@@ -16,8 +18,9 @@ class PublicKeyPinningAndroid extends PublicKeyPinningPlatform {
     //! Bypass pin check untill native Android version is implemented.
     return;
 
+    // final evsList = evaluations.map((e) => e.toJson()).toList();
     // final evs = {
-    //   "evaluations": evaluations,
+    //   "evaluations": evsList,
     // };
     // return methodChannel.invokeMethod('init', evs);
   }
