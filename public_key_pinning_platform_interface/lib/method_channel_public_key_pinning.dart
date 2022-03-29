@@ -9,8 +9,9 @@ class MethodChannelPublicKeyPinning extends PublicKeyPinningPlatform {
 
   @override
   Future<void> init(List<Evaluation> evaluations) {
-    final evs = <String, dynamic>{
-      "evaluations": evaluations,
+    final evsList = evaluations.map((e) => e.toJson()).toList();
+    final evs = {
+      "evaluations": evsList,
     };
     return _mainChannel.invokeMethod('init', evs);
   }
