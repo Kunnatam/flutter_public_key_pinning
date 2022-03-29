@@ -23,6 +23,7 @@ dev_dependencies:
 
 flutter:
   plugin:
+    implements: public_key_pinning
     platforms:
       android:
         package: com.klaa.public_key_pinning_android
